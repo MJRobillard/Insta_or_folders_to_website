@@ -11,9 +11,6 @@ import instaloader
 import os
 import shutil
 loader = instaloader.Instaloader()
-USER = 'poetixending'
-PASSWORD = 'mrob6277MROB!!'
-
 
 
 
