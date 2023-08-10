@@ -14,6 +14,11 @@ loader = instaloader.Instaloader()
 from Insta_to_Bootstrap import html_editor
 import webbrowser
 
+import tkinter as tk
+
+
+import customtkinter as ctk
+
 
 
 
@@ -50,28 +55,14 @@ def filter_and_copy_folders(root_dir, destination_dir, extensions):
 
 
 
-root_dir = os.path.dirname(os.path.abspath(__file__))
 
-destination_dir = str(root_dir) + '/Insta_to_Bootstrap/Categories_folder' # The destination directory where 'client' folders will be moved
-extensions_to_move = ('.jpeg', '.jpg', '.mp4')
 #get_instagram('themattiepattie')
 
-print('now sort into the categories you want, rename the folders to change the names on the website or add more or less')
-
-import os
-import sys
-import tkinter as tk
-from pdfrw import PdfReader, PdfWriter
-
-
-import customtkinter as ctk
 
 ctk.set_appearance_mode("System")
 
 ctk.set_default_color_theme("dark-blue")
 
-if not os.path.exists('./Convert_Folder'): # makes a convert folder if doesnt exist, this folder is where you put the pdfs 
-    os.makedirs('./Convert_Folder')
 
 appWidth, appHeight = 600, 700
 
@@ -104,6 +95,10 @@ class App(ctk.CTk):
         
         
     def get_insta(self):
+        root_dir = os.path.dirname(os.path.abspath(__file__))
+
+        destination_dir = str(root_dir) + '/Insta_to_Bootstrap/Categories_folder' # The destination directory where 'client' folders will be moved
+        extensions_to_move = ('.jpeg', '.jpg', '.mp4')
         text = [key +': ' +App.memory[key].get() for key in App.memory]
         print(text,'texttt')
         print(App.memory['Username'].get(),"TITLEEEE")
@@ -112,6 +107,7 @@ class App(ctk.CTk):
         self.display_box.insert("0.0", str(text) +'rerange into category folders before running the next' )
     
     def gen_html(self):
+        
         pathway = "Insta_to_Bootstrap\Categories_folder"
 
         html_editor.category_level_down(pathway)
