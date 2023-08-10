@@ -5,10 +5,8 @@ import os
 
 
 
-
-
 # Read the HTML content from index.html
-with open("Insta to Bootstrap\Template.html", "r") as f:
+with open("Insta_to_Bootstrap\Template.html", "r") as f:
     html_content = f.read()
 
 soup = BeautifulSoup(html_content, 'html.parser')
@@ -107,7 +105,7 @@ def post_field(folder,category = None):
   
   
       
-pathway = "Insta to Bootstrap\Categories_folder"
+pathway = "Insta_to_Bootstrap\Categories_folder"
 
 def category_level_down(head_folder):
     for category in os.listdir(head_folder):
@@ -119,4 +117,3 @@ def category_level_down(head_folder):
             post_field(os.path.join(category_path,folder),str(os.path.basename(category_path)))
                 
 
-category_level_down(pathway)

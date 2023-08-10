@@ -11,6 +11,9 @@ import instaloader
 import os
 import shutil
 loader = instaloader.Instaloader()
+from Insta_to_Bootstrap import html_editor
+import webbrowser
+
 
 
 
@@ -49,9 +52,88 @@ def filter_and_copy_folders(root_dir, destination_dir, extensions):
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
 
-destination_dir = str(root_dir) + '/Insta to Bootstrap/Categories_folder' # The destination directory where 'client' folders will be moved
+destination_dir = str(root_dir) + '/Insta_to_Bootstrap/Categories_folder' # The destination directory where 'client' folders will be moved
 extensions_to_move = ('.jpeg', '.jpg', '.mp4')
-get_instagram('themattiepattie')
+#get_instagram('themattiepattie')
 
-filter_and_copy_folders(root_dir, destination_dir,extensions_to_move)
 print('now sort into the categories you want, rename the folders to change the names on the website or add more or less')
+
+import os
+import sys
+import tkinter as tk
+from pdfrw import PdfReader, PdfWriter
+
+
+import customtkinter as ctk
+
+ctk.set_appearance_mode("System")
+
+ctk.set_default_color_theme("dark-blue")
+
+if not os.path.exists('./Convert_Folder'): # makes a convert folder if doesnt exist, this folder is where you put the pdfs 
+    os.makedirs('./Convert_Folder')
+
+appWidth, appHeight = 600, 700
+
+class App(ctk.CTk):
+    count = 0
+    memory = {}
+    
+    def make_field(self, title, place_holder, column = 0): #function to make a new field, useful if later you want new default metadata options
+        self.title_field = ctk.CTkLabel(self, text=title)
+        self.title_field.grid(row=App.count, column=0, padx=20, pady=20, sticky='ew')
+
+        self.title_entry = ctk.CTkEntry(self, placeholder_text=place_holder)
+        self.title_entry.grid(row=App.count, column=1, padx=20, pady=20, sticky='ew')
+        App.memory[title]=self.title_entry
+        App.count = App.count + 1
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.title("GUI for remediation")
+        self.geometry(f"{appWidth}x{appHeight}")
+        # Info for presenting the title form field
+        self.generateResultsButton = ctk.CTkButton(self, text="Generate Instagram_folders", command=self.get_insta)# gen results button leads to the create Text
+        self.generateResultsButton.grid(row=0, column=4, columnspan=2, padx=20, pady=20, sticky="ew")
+        self.generateHTMLButton = ctk.CTkButton(self, text="Generate HTML", command=self.gen_html)# gen results button leads to the create Text
+        self.generateHTMLButton.grid(row=2, column=4, columnspan=2, padx=20, pady=20, sticky="ew")
+
+        self.display_box = ctk.CTkTextbox(self, width=200, height=100)# makes the display box so you know it worked
+        self.display_box.grid(row=1, column=4, columnspan=4, padx=20, pady=20, sticky="nsew")
+        
+        
+    def get_insta(self):
+        text = [key +': ' +App.memory[key].get() for key in App.memory]
+        print(text,'texttt')
+        print(App.memory['Username'].get(),"TITLEEEE")
+        get_instagram(App.memory['Username'].get())
+        filter_and_copy_folders(root_dir, destination_dir,extensions_to_move)
+        self.display_box.insert("0.0", str(text) +'rerange into category folders before running the next' )
+    
+    def gen_html(self):
+        pathway = "Insta_to_Bootstrap\Categories_folder"
+
+        html_editor.category_level_down(pathway)
+        webbrowser.open('index.html')
+
+
+        
+
+
+    
+
+
+    # The file will be automatically closed when exiting the 'with' block
+
+
+ 
+               
+
+
+if __name__ == "__main__":
+    app = App()
+    app.make_field("Username", "Themattiepattie")
+
+    # Used to run the application
+    app.mainloop()
